@@ -1,11 +1,10 @@
 (defn odds-only
-  ([s]
-   (odds-only s []))
-  ([s res]
-   (cond
-     (empty? s) res
-     (= (mod (first s) 2) 1) (recur (rest s) (conj res (first s)))
-     :else (recur (rest s) res))))
+  [s]
+  (lazy-seq
+    (when-let [s (seq s)]
+      (if (= (mod (first s) 2) 1)
+        (cons (first s) (odds-only (rest s)))
+        (odds-only (rest s))))))
 
 
 (odds-only [])
