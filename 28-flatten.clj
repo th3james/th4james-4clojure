@@ -8,12 +8,12 @@
 
 
 (defn eager-flattr
-  [v]
-  (loop [r [] v v]
+  [in]
+  (loop [result [] in in]
     (cond
-      (sequential? (first v)) (recur r (concat (first v) (rest v)))
-      (empty? v) r
-      :else (recur (conj (first v) r) (rest v)))))
+      (sequential? (first in)) (recur result (concat (first in) (rest in)))
+      (seq in) (recur (conj result (first in)) (rest in))
+      :else result)))
 
 
 (defn tests
